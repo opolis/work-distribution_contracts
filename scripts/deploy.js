@@ -14,6 +14,26 @@ async function main() {
   await redeem.deployed();
 
   console.log("MerkleRedeem deployed to:", redeem.address);
+
+  // approve max spend limit for work token
+  const signer = await ethers.getSigner();
+  const workToken = new ethers.Contract(
+    config.workTokenAddress,
+    [
+      "function approve(address spender, uint256 amount) external returns (bool)",
+    ],
+    signer
+  );
+
+  console.log(`Approving MerkleRedeem to max spend $WORK tokens (wei)...`);
+  const approvalTx = await workToken.approve(
+    redeem.address,
+    ethers.constants.MaxUint256
+  );
+  const approvalReceipt = await approvalTx.wait();
+  console.log(
+    `Approval tx mined, gas used ${approvalReceipt.gasUsed.toString()}`
+  );
 }
 
 main()

@@ -47,25 +47,6 @@ async function main() {
   const MerkleRedeem = await ethers.getContractFactory("MerkleRedeem");
   const redeem = await MerkleRedeem.attach(config.merkleContractAddress);
 
-  // approve spend limit
-  const signer = await ethers.getSigner();
-  const workToken = new ethers.Contract(
-    config.workTokenAddress,
-    [
-      "function approve(address spender, uint256 amount) external returns (bool)",
-    ],
-    signer
-  );
-
-  console.log(
-    `Approving MerkleRedeem to spend ${total.toString()} $WORK tokens (wei)...`
-  );
-  const approvalTx = await workToken.approve(redeem.address, total);
-  const approvalReceipt = await approvalTx.wait();
-  console.log(
-    `Approval tx mined, gas used ${approvalReceipt.gasUsed.toString()}`
-  );
-
   // upload merkle root
   console.log(`Sending proof...`);
   const seedTx = await redeem.seedAllocations(config.epoch, root, total);

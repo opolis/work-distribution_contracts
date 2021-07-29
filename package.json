@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.2.0",
-    "ethereumjs-util": "^7.1.0"
+    "ethereumjs-util": "^7.1.0",
+    "hardhat-abi-exporter": "^2.2.1"
   }
 }

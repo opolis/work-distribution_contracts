@@ -1,4 +1,5 @@
 require("@nomiclabs/hardhat-waffle");
+require('hardhat-abi-exporter');
 const config = require("./config.json");
 
 // This is a sample Hardhat task. To learn how to create your own go to
@@ -31,4 +32,11 @@ module.exports = {
       accounts: [config.privateKey],
     },
   },
+  abiExporter: {
+    path: './abis',
+    clear: true,
+    flat: true,
+    only: [],
+    spacing: 2
+  }
 };
