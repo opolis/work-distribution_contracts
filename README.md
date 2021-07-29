@@ -46,7 +46,8 @@ function seedAllocations(uint _epoch, bytes32 _merkleRoot, uint _totalAllocation
 ```
 
 ### Events:
-- **Claimed** returns address and claimed balance of claimer
+- **Claimed** returns address and claimed balance of claimer when claim completes
+- **RootAdded** returns epoch number and total token allocation when new root is uploaded
 
 
 ## Scripts
