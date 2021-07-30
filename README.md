@@ -51,6 +51,9 @@ function seedAllocations(uint _epoch, bytes32 _merkleRoot, uint _totalAllocation
 
 
 ## Scripts
+### Compile
+
+`npm run compile` compiles all contracts and outputs ABIs to `./abis`
 ### Deploy
 
 1. Make a copy of `config.example.json` called `config.json`

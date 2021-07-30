@@ -10,8 +10,8 @@ contract MerkleRedeem is Ownable {
 
     IERC20 public token;
 
-    event Claimed(address _claimant, uint256 _balance);
-    event RootAdded(uint256 epoch, uint256 _totalAllocation);
+    event Claimed(address indexed claimant, uint256 epoch, uint256 balance);
+    event RootAdded(uint256 epoch, uint256 totalAllocation);
 
     // Recorded epochs
     mapping(uint => bytes32) public epochMerkleRoots;
@@ -30,7 +30,6 @@ contract MerkleRedeem is Ownable {
         private
     {
         if (_balance > 0) {
-            emit Claimed(_recipient, _balance);
             require(token.transfer(_recipient, _balance), "ERR_TRANSFER_FAILED");
         }
     }
@@ -48,6 +47,7 @@ contract MerkleRedeem is Ownable {
 
         claimed[_epoch][_recipient] = true;
         disburse(_recipient, _claimedBalance);
+        emit Claimed(_recipient, _epoch, _claimedBalance);
     }
 
     struct Claim {
@@ -72,6 +72,7 @@ contract MerkleRedeem is Ownable {
 
             totalBalance += claim.balance;
             claimed[claim.epoch][_recipient] = true;
+            emit Claimed(_recipient, claim.epoch, claim.balance);
         }
         disburse(_recipient, totalBalance);
     }
