@@ -34,9 +34,7 @@ contract MerkleRedeem is Ownable {
     )
         private
     {
-        if (_balance > 0) {
-            require(token.transfer(_recipient, _balance), "ERR_TRANSFER_FAILED");
-        }
+        require(token.transfer(_recipient, _balance), "ERR_TRANSFER_FAILED");
     }
 
     /// @notice performs internal verification checks that the proof is valid and marks claim as claimed
