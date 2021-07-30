@@ -10,9 +10,14 @@ Ownable Merkle tree contract for making ERC-20 token distributions.
 
 ### Functions:
 
-- **disburse** - transfers tokens from contract to recipient
+- **constructor** - takes the address of the token to be disbursed
 ```
-function disburse(address _recipient, uint _balance) private
+constructor(address _token) public
+```
+
+- **_disburse** - transfers tokens from contract to recipient
+```
+function _disburse(address _recipient, uint _balance) private
 ```
 
 - **_claimEpoch** performs verification checks, marks epoch claimed and emits Claimed event
@@ -46,14 +51,20 @@ function seedAllocations(uint _epoch, bytes32 _merkleRoot, uint _totalAllocation
 ```
 
 ### Events:
-- **Claimed** returns address and claimed balance of claimer when claim completes
+- **Claimed** returns address, epoch and claimed balance when claim completes
 - **RootAdded** returns epoch number and total token allocation when new root is uploaded
 
 
 ## Scripts
+
+The default network for all scripts is Polygon network.
 ### Compile
 
 `npm run compile` compiles all contracts and outputs ABIs to `./abis`
+
+### Test
+
+`npm run test` runs unit tests and performs gas profiling
 ### Deploy
 
 Deploys Merkle Redeem contract with specified $WORK token address, sets the deployer as the contract owner and max approves the MerkleRedeem contract to spend $WORK tokens from the owner.

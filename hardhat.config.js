@@ -24,7 +24,7 @@ module.exports = {
   defaultNetwork: "hardhat",
   networks: {
     hardhat: {},
-    matic: {
+    polygon: {
       url: "https://rpc-mumbai.maticvigil.com",
       accounts: [config.privateKey],
     },
@@ -42,6 +42,7 @@ module.exports = {
   },
   gasReporter: {
     currency: 'USD',
-    gasPrice: 5
+    gasPrice: 5,
+    excludeContracts: ['contracts/test']
   }
 };

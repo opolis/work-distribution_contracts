@@ -2,9 +2,9 @@
   "name": "hardhat-project",
   "scripts": {
     "compile": "npx hardhat compile",
-    "deploy": "npx hardhat run scripts/deploy.js --network matic",
-    "create": "npx hardhat run scripts/createDistribution.js --network matic",
-    "claim": "npx hardhat run scripts/claimEpoch.js --network matic",
+    "deploy": "npx hardhat run scripts/deploy.js --network polygon",
+    "create": "npx hardhat run scripts/createDistribution.js --network polygon",
+    "claim": "npx hardhat run scripts/claimEpoch.js --network polygon",
     "test": "npx hardhat test"
   },
   "devDependencies": {
