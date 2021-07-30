@@ -1,5 +1,6 @@
 require("@nomiclabs/hardhat-waffle");
 require('hardhat-abi-exporter');
+require("hardhat-gas-reporter");
 const config = require("./config.json");
 
 // This is a sample Hardhat task. To learn how to create your own go to
@@ -38,5 +39,9 @@ module.exports = {
     flat: true,
     only: [],
     spacing: 2
+  },
+  gasReporter: {
+    currency: 'USD',
+    gasPrice: 5
   }
 };

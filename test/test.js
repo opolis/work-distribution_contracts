@@ -326,27 +326,7 @@ describe("MerkleRedeem", function () {
       let result = await testToken.balanceOf(accounts[1].address);
       expect(result).to.equal(ethers.utils.parseUnits("2234"));
     });
-
-    it("Returns an array of epoch claims", async () => {
-      let expectedResult = [false, false];
-      let result = await redeem.claimStatus(accounts[1].address, 1, 2);
-      expect(result).to.deep.equal(expectedResult);
-
-      let claimedBalance1 = ethers.utils.parseUnits("1000");
-      const proof1 = merkleTree1.getHexProof(elements1[0]);
-
-      await network.provider.send("evm_increaseTime", [8 * DAY]);
-      await network.provider.send("evm_mine");
-
-      await redeem
-        .connect(accounts[1])
-        .claimEpochs(accounts[1].address, [[1, claimedBalance1, proof1]]);
-
-      expectedResult = [true, false];
-      result = await redeem.claimStatus(accounts[1].address, 1, 2);
-      expect(result).to.deep.equal(expectedResult);
-    });
-
+    
     it("Returns an array of merkle roots", async () => {
       let expectedResult = [root1, root2];
       let result = await redeem.merkleRoots(1, 2);

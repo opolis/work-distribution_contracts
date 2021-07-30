@@ -12,22 +12,22 @@ Ownable Merkle tree contract for making ERC-20 token distributions.
 
 - **disburse** - transfers tokens from contract to recipient
 ```
-function disburse(address _liquidityProvider, uint _balance) private
+function disburse(address _recipient, uint _balance) private
+```
+
+- **_claimEpoch** performs verification checks, marks epoch claimed and emits Claimed event
+```
+function _claimEpoch(address _recipient, uint _epoch, uint _claimedBalance, bytes32[] memory _merkleProof) private
 ```
 
 - **claimEpoch** claim tokens for the selected epoch
 ```
-function claimEpoch(address _liquidityProvider, uint _epoch, uint _claimedBalance, bytes32[] memory _merkleProof) public
+function claimEpoch(address _recipient, uint _epoch, uint _claimedBalance, bytes32[] memory _merkleProof) public
 ```
 
 - **claimEpochs** claim tokens for multiple pochs
 ```
-function claimEpochs(address _liquidityProvider, Claim[] memory claims) public
-```
-
-- **claimStatus** returns an array of whether or not that epoch has been claimed for the specified range
-```
-function claimStatus(address _liquidityProvider, uint _begin, uint _end) external view returns (bool[] memory)
+function claimEpochs(address _recipient, Claim[] memory claims) public
 ```
 
 - **merkleRoots** returns the merkle roots for the specified range of epochs
@@ -37,7 +37,7 @@ function merkleRoots(uint _begin, uint _end) external view returns (bytes32[] me
 
 - **verifyClaim** verifies a claim
 ```
-function verifyClaim(address _liquidityProvider, uint _epoch, uint _claimedBalance, bytes32[] memory _merkleProof) public view returns (bool valid)
+function verifyClaim(address _recipient, uint _epoch, uint _claimedBalance, bytes32[] memory _merkleProof) public view returns (bool valid)
 ```
 
 - **seedAllocations** uploads the merkle root and transfers the token allocation from the sender to the contract
@@ -56,6 +56,7 @@ function seedAllocations(uint _epoch, bytes32 _merkleRoot, uint _totalAllocation
 `npm run compile` compiles all contracts and outputs ABIs to `./abis`
 ### Deploy
 
+Deploys Merkle Redeem contract with specified $WORK token address, sets the deployer as the contract owner and max approves the MerkleRedeem contract to spend $WORK tokens from the owner.
 1. Make a copy of `config.example.json` called `config.json`
 2. Enter the address of the $WORK token contract as `workTokenAddress` in `config.json`
 3. Enter the private key for the deployer account as `privateKey` in `config.json`. This account will be the owner of the contract.
