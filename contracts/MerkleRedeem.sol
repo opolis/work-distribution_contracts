@@ -10,8 +10,8 @@ contract MerkleRedeem is Ownable {
 
     IERC20 public token;
 
-    event Claimed(address indexed claimant, uint256 epoch, uint256 balance);
-    event RootAdded(uint256 epoch, uint256 totalAllocation);
+    event Claimed(address indexed claimant, uint256 indexed epoch, uint256 balance);
+    event RootAdded(address indexed depositor, uint256 indexed epoch, uint256 totalAllocation);
 
     // Recorded epochs
     mapping(uint => bytes32) public epochMerkleRoots;
@@ -155,6 +155,6 @@ contract MerkleRedeem is Ownable {
         epochMerkleRoots[_epoch] = _merkleRoot;
 
         require(token.transferFrom(msg.sender, address(this), _totalAllocation), "ERR_TRANSFER_FAILED");
-        emit RootAdded(_epoch, _totalAllocation);
+        emit RootAdded(msg.sender, _epoch, _totalAllocation);
     }
 }
