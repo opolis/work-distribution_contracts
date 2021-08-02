@@ -28,6 +28,10 @@ module.exports = {
       url: "https://rpc-mumbai.maticvigil.com",
       accounts: [config.privateKey],
     },
+    mumbai: {
+      url: "https://rpc-mumbai.matic.today",
+      accounts: [config.privateKey],
+    },
     ropsten: {
       url: "https://eth-ropsten.alchemyapi.io/v2/CCx5k2KtxjdlVhvv5admqoiDnhHFRms4",
       accounts: [config.privateKey],
