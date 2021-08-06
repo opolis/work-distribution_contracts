@@ -25,11 +25,11 @@ module.exports = {
   networks: {
     hardhat: {},
     polygon: {
-      url: "https://rpc-mumbai.maticvigil.com",
+      url: "https://rpc-mainnet.maticvigil.com",
       accounts: [config.privateKey],
     },
     mumbai: {
-      url: "https://rpc-mumbai.matic.today",
+      url: "https://rpc-mumbai.maticvigil.com",
       accounts: [config.privateKey],
     },
     ropsten: {
