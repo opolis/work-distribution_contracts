@@ -10,8 +10,8 @@ contract MerkleRedeem is Ownable {
 
     IERC20 public token;
 
-    event Claimed(address indexed claimant, uint256 indexed epoch, uint256 balance);
-    event RootAdded(address indexed depositor, uint256 indexed epoch, uint256 totalAllocation);
+    event Claimed(address indexed claimant, uint256 indexed rewardEpoch, uint256 balance);
+    event RootAdded(address indexed depositor, uint256 indexed rewardEpoch, uint256 totalAllocation);
 
     // Recorded epochs
     mapping(uint => bytes32) public epochMerkleRoots;
