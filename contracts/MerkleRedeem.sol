@@ -139,11 +139,11 @@ contract MerkleRedeem is Ownable {
     }
 
     // OWNER ONLY
-    /// @notice writes merkle root for the selected epoch and transfers necessary tokens from the owner
+    /// @notice writes merkle root for the selected epoch, requires contract to already be funded
     /// @param _epoch new epoch number
     /// @param _merkleRoot merkle root for the new epoch
-    /// @param _totalAllocation total number of tokens to be transferred from the owner for claims
-    function seedAllocations(
+    /// @param _totalAllocation total number of tokens required
+    function newRoot(
         uint _epoch,
         bytes32 _merkleRoot,
         uint _totalAllocation
@@ -154,7 +154,7 @@ contract MerkleRedeem is Ownable {
         require(epochMerkleRoots[_epoch] == bytes32(0), "cannot rewrite merkle root");
         epochMerkleRoots[_epoch] = _merkleRoot;
 
-        require(token.transferFrom(msg.sender, address(this), _totalAllocation), "ERR_TRANSFER_FAILED");
+        require(token.balanceOf(address(this)) >= _totalAllocation, "contract hasn't been funded");
         emit RootAdded(msg.sender, _epoch, _totalAllocation);
     }
 }

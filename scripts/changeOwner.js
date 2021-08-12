@@ -30,25 +30,6 @@ async function main() {
     `Approval tx mined, gas used ${approvalReceipt.gasUsed.toString()}`
   );
   console.log("new owner:", await redeem.owner())
-
-  // approve max spend limit for work token for new owner on merkle drop
-  const workToken = new ethers.Contract(
-    config.workTokenAddress,
-    [
-      "function approve(address spender, uint256 amount) external returns (bool)",
-    ],
-    signer
-  );
-
-  console.log(`Approving MerkleRedeem to max spend $WORK tokens from new owner`);
-  const approvalTx = await workToken.approve(
-    config.merkleContractAddress,
-    ethers.constants.MaxUint256
-  );
-  const approvalReceipt = await approvalTx.wait();
-  console.log(
-    `Approval tx mined, gas used ${approvalReceipt.gasUsed.toString()}`
-  );
 }
 
 main()

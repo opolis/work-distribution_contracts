@@ -20,15 +20,31 @@ describe("MerkleRedeem", function () {
 
     accounts = await ethers.getSigners();
     await testToken.mint(
-      accounts[0].address,
+      redeem.address,
       ethers.utils.parseUnits("1450000")
     );
-    await testToken.approve(redeem.address, ethers.constants.MaxUint256);
   });
 
   it("Addresses should be set correctly", async function () {
     expect(await redeem.token()).to.equal(testToken.address);
     expect(await redeem.owner()).to.equal(accounts[0].address);
+  });
+
+  it("storing an allocation fails if not funded", async () => {
+    let claimBalance = ethers.utils.parseUnits("1450001");
+
+    const elements = [
+      ethers.utils.solidityKeccak256(
+        ["bytes", "uint"],
+        [accounts[0].address, claimBalance]
+      ),
+    ];
+    const merkleTree = new MerkleTree(elements);
+    const root = merkleTree.getHexRoot();
+
+    await expect(
+      redeem.newRoot(1, root, ethers.utils.parseUnits("1450001"))
+    ).to.be.revertedWith("contract hasn't been funded");
   });
 
   it("stores an allocation", async () => {
@@ -43,7 +59,7 @@ describe("MerkleRedeem", function () {
     const merkleTree = new MerkleTree(elements);
     const root = merkleTree.getHexRoot();
 
-    await redeem.seedAllocations(1, root, ethers.utils.parseUnits("145000"));
+    await redeem.newRoot(1, root, ethers.utils.parseUnits("145000"));
 
     const proof = merkleTree.getHexProof(elements[0]);
 
@@ -68,7 +84,7 @@ describe("MerkleRedeem", function () {
     const merkleTree = new MerkleTree(elements);
     const root = merkleTree.getHexRoot();
 
-    await redeem.seedAllocations(1, root, ethers.utils.parseUnits("145000"));
+    await redeem.newRoot(1, root, ethers.utils.parseUnits("145000"));
 
     // construct tree to attempt to override the allocation
     const elements2 = [
@@ -85,7 +101,7 @@ describe("MerkleRedeem", function () {
     const root2 = merkleTree2.getHexRoot();
 
     await expect(
-      redeem.seedAllocations(1, root2, ethers.utils.parseUnits("145000"))
+      redeem.newRoot(1, root2, ethers.utils.parseUnits("145000"))
     ).to.be.revertedWith("cannot rewrite merkle root");
   });
 
@@ -106,7 +122,7 @@ describe("MerkleRedeem", function () {
     const merkleTree = new MerkleTree(elements);
     const root = merkleTree.getHexRoot();
 
-    await redeem.seedAllocations(1, root, ethers.utils.parseUnits("145000"));
+    await redeem.newRoot(1, root, ethers.utils.parseUnits("145000"));
 
     let proof0 = merkleTree.getHexProof(elements[0]);
     let result = await redeem.verifyClaim(
@@ -162,7 +178,7 @@ describe("MerkleRedeem", function () {
     const merkleTree = new MerkleTree(elements);
     const root = merkleTree.getHexRoot();
 
-    await redeem.seedAllocations(1, root, ethers.utils.parseUnits("145000"));
+    await redeem.newRoot(1, root, ethers.utils.parseUnits("145000"));
 
     let claimedBalance = ethers.utils.parseUnits("1000");
     const merkleProof = merkleTree.getHexProof(elements[0]);
@@ -230,7 +246,7 @@ describe("MerkleRedeem", function () {
     const merkleTree = new MerkleTree(elements);
     const root = merkleTree.getHexRoot();
 
-    await redeem.seedAllocations(1, root, ethers.utils.parseUnits("145000"));
+    await redeem.newRoot(1, root, ethers.utils.parseUnits("145000"));
 
     await network.provider.send("evm_increaseTime", [1 * DAY]);
     let claimedBalance = ethers.utils.parseUnits("1000");
@@ -280,11 +296,11 @@ describe("MerkleRedeem", function () {
       merkleTree2 = new MerkleTree(elements2);
       root2 = merkleTree2.getHexRoot();
 
-      await redeem.seedAllocations(1, root1, ethers.utils.parseUnits("145000"));
+      await redeem.newRoot(1, root1, ethers.utils.parseUnits("145000"));
 
       await network.provider.send("evm_increaseTime", [7 * DAY]);
       await network.provider.send("evm_mine");
-      await redeem.seedAllocations(2, root2, ethers.utils.parseUnits("145000"));
+      await redeem.newRoot(2, root2, ethers.utils.parseUnits("145000"));
     });
 
     it("Allows the user to claim once the time has past", async () => {

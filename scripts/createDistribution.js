@@ -49,7 +49,7 @@ async function main() {
 
   // upload merkle root
   console.log(`Sending proof...`);
-  const seedTx = await redeem.seedAllocations(config.epoch, root, total);
+  const seedTx = await redeem.newRoot(config.epoch, root, total);
   const seedReceipt = await seedTx.wait();
   console.log(`Seed tx mined, gas used ${seedReceipt.gasUsed.toString()}`);
 

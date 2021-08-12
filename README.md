@@ -2,7 +2,7 @@
 
 Merkle tree redemption contract for distributing $WORK tokens. Tokens are distributed on a per-epoch basis and claimees can claim from past epochs at any time.
 
-Based on [https://github.com/balancer-labs/erc20-redeemable/tree/master/merkle](Balancer Labs Merkle Distributor) with modifications to use Hardhat/ethers.
+Based on [Balancer Labs Merkle Distributor](https://github.com/balancer-labs/erc20-redeemable/tree/master/merkle) with modifications to use Hardhat/ethers.
 
 ## Merkle Redeem Contract
 
@@ -45,9 +45,9 @@ function merkleRoots(uint _begin, uint _end) external view returns (bytes32[] me
 function verifyClaim(address _recipient, uint _epoch, uint _claimedBalance, bytes32[] memory _merkleProof) public view returns (bool valid)
 ```
 
-- **seedAllocations** uploads the merkle root and transfers the token allocation from the sender to the contract
+- **newRoot** uploads the merkle root if the Merkle contract holds enough tokens to cover redemptions.
 ```
-function seedAllocations(uint _epoch, bytes32 _merkleRoot, uint _totalAllocation) external onlyOwner
+function newRoot(uint _epoch, bytes32 _merkleRoot, uint _totalAllocation) external onlyOwner
 ```
 
 ### Events:
@@ -67,7 +67,7 @@ The default network for all scripts is Polygon network.
 `npm run test` runs unit tests and performs gas profiling
 ### Deploy
 
-Deploys Merkle Redeem contract with specified $WORK token address, sets the deployer as the contract owner and max approves the MerkleRedeem contract to spend $WORK tokens from the owner.
+Deploys Merkle Redeem contract with specified $WORK token address, sets the deployer as the contract owner.
 1. Make a copy of `config.example.json` called `config.json`
 2. Enter the address of the $WORK token contract as `workTokenAddress` in `config.json`
 3. Enter the private key for the deployer account as `privateKey` in `config.json`. This account will be the owner of the contract.
