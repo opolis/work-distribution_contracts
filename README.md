@@ -1,3 +1,6 @@
+# License 
+GNU LESSER GENERAL PUBLIC LICENSE (see https://www.gnu.org/licenses/lgpl-3.0.html)
+
 # work-distribution_contracts
 
 Merkle tree redemption contract for distributing $WORK tokens. Tokens are distributed on a per-epoch basis and claimees can claim from past epochs at any time.
