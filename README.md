@@ -71,24 +71,34 @@ The default network for all scripts is Polygon network.
 ### Deploy
 
 Deploys Merkle Redeem contract with specified $WORK token address, sets the deployer as the contract owner.
-1. Make a copy of `config.example.json` called `config.json`
-2. Enter the address of the $WORK token contract as `workTokenAddress` in `config.json`
+1. Make a copy of `config.example.json` called `config.json`.
+2. Enter the address of the $WORK token contract as `workTokenAddress` in `config.json`.
 3. Enter the private key for the deployer account as `privateKey` in `config.json`. This account will be the owner of the contract.
 4. `npm run compile`
 5. `npm run deploy`
 
 ### Create MerkleTree
 
-1. Make a copy of `config.example.json` called `config.json`
+1. Make a copy of `config.example.json` called `config.json`.
 2. Enter the private key for the owner account as `privateKey` in `config.json`.
 3. Enter the address of the MerkleRedeem contract as `merkleContractAddress` in `config.json`.
 4. Enter the current epoch as `epoch` in `config.json`.
-5. `npm run create`
+5. Create a file `claims/claims_[epoch].json` with the claims data in the following form where `claimBalance` is the in the base token unit amount or wei.
+```
+[
+  {
+    address: "0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199",
+    claimBalance: "1111111111111"
+  },
+  ...
+]
+```
+6. `npm run create`
 
 ### Claim Epoch
 
 Claims the tokens for the first address in the proof data structure for the epoch specified in the config.
-1. Make a copy of `config.example.json` called `config.json`
+1. Make a copy of `config.example.json` called `config.json`.
 2. Enter the private key for the owner account as `privateKey` in `config.json`.
 3. Enter the address of the MerkleRedeem contract as `merkleContractAddress` in `config.json`.
 4. Enter the current epoch as `epoch` in `config.json`.

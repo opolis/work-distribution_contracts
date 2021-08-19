@@ -16,17 +16,8 @@ async function main() {
   if (!config.merkleContractAddress) throw "No address for contract set";
   if (config.epoch < 0) throw "Epoch not set";
 
-  // sample claims data
-  const data = [
-    {
-      address: "0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199",
-      claimBalance: "1111111111111",
-    },
-    {
-      address: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-      claimBalance: "2222222222222",
-    },
-  ];
+  // get claims data
+  let data = require(`../claims/claims_${config.epoch}.json`);
 
   // hash claims
   let total = ethers.BigNumber.from("0");
@@ -62,7 +53,7 @@ async function main() {
         claimBalance: user.claimBalance,
         proof: merkleTree.getHexProof(elements[index]),
       };
-    })
+    }), null, 2
   );
 
   if (!fs.existsSync("./proofs")) fs.mkdirSync("./proofs");

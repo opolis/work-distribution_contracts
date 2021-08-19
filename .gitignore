@@ -11,4 +11,7 @@ config.json
 #proofs
 proofs
 
+#claims
+claims
+
 .DS_Store

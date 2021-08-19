@@ -1,6 +1,5 @@
 /**
- * Changes owner on live MerkleRedeem contract and approves MerkleRedeem
- * to max spend $WORK tokens from that new owner address
+ * Changes owner on live MerkleRedeem contract
  */
 const hre = require("hardhat");
 const ethers = hre.ethers;
