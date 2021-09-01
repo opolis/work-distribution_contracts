@@ -29,8 +29,9 @@ module.exports = {
       accounts: [config.privateKey],
     },
     mumbai: {
-      url: "https://rpc-mumbai.maticvigil.com",
+      url: "https://rpc-mumbai.matic.today",
       accounts: [config.privateKey],
+      gasPrice: 8000000000,
     },
     ropsten: {
       url: "https://eth-ropsten.alchemyapi.io/v2/CCx5k2KtxjdlVhvv5admqoiDnhHFRms4",
