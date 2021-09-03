@@ -2,5 +2,6 @@
     "workTokenAddress": "",
     "privateKey": "",
     "merkleContractAddress": "",
-    "epoch": -1
+    "epoch": -1,
+    "etherscan": ""
 }
