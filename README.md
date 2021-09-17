@@ -10,6 +10,7 @@ Based on [Balancer Labs Merkle Distributor](https://github.com/balancer-labs/erc
 ### Deployments:
 
 Mumbai: 0xB3F54a4C816Be3Baae88Eb49711Dc6Eb63632F6c
+
 Polygon: 0xd8C5C9D730f66cc42dB4b5A5E43b2e872d34424B
 
 ## Merkle Redeem Contract
